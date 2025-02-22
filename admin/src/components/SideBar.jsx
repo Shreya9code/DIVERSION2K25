@@ -10,7 +10,7 @@ const SideBar = () => {
 
   return (
     <div className="min-h-screen bg-cyan-800 bg-glass backdrop-blur-glass border border-glas text-white w-64 p-5 fixed top-0 left-0 overflow-y-auto pt-20">
-      {aToken ? (
+      {aToken && !dToken ? (
         // ✅ Show Admin Sidebar if aToken exists
         <ul className="space-y-4">
           <NavLink
@@ -58,7 +58,9 @@ const SideBar = () => {
             <p>Doctors List</p>
           </NavLink>
         </ul>
-      ) : dToken ? (
+      ) :
+      
+      dToken ? (
         // ✅ Show Doctor Sidebar if dToken exists
         <ul className="space-y-4">
           <NavLink

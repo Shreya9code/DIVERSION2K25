@@ -18,7 +18,7 @@ const AdminContextProvider = (props) => {
   // To save token in localStorage on login
   const saveToken = (token) => {
     console.log("Saving token:", token);
-    localStorage.setItem("atoken", token);
+    localStorage.setItem("aToken", token);
     setAToken(token);
   };
 
@@ -28,7 +28,7 @@ const AdminContextProvider = (props) => {
         `${backendUrl}/api/admin/all-doctors`,
         {},
         {
-          headers: { aToken, "Content-Type": "multipart/form-data" },
+          headers: { Authorization: `Bearer ${aToken}`, "Content-Type": "multipart/form-data" },
         }
       );
       console.log("Doctors API Response:", data);
@@ -55,7 +55,7 @@ const AdminContextProvider = (props) => {
         `${backendUrl}/api/admin/change-availability`,
         { docId },
         {
-          headers: { aToken },
+          headers: { Authorization: `Bearer ${aToken}` },
         }
       );
       console.log("Full API Response:", data);
@@ -74,12 +74,13 @@ const AdminContextProvider = (props) => {
 
   const getAllAppointments = async () => {
     try {
-      const { data } = await axios.get(backendUrl + "/api/admin/appointments", {
-        headers: { aToken, "Content-Type": "multipart/form-data" },
+      const res = await axios.get("http://localhost:4000/api/admin/appointments", {
+        headers: { Authorization: `Bearer ${aToken}`, "Content-Type": "application/json" },
       });
-      if (data.success) {
-        setAppointments(data.appointments);
-        console.log(data.appointments);
+      if (res.data.success) {
+        setAppointments(res.data);
+        //setAppointments(data.appointments);
+        console.log(res.data);
       } else {
         toast.error(data.message);
       }
@@ -93,7 +94,7 @@ const AdminContextProvider = (props) => {
         `${backendUrl}/api/admin/cancel-appointments`,
         { appointmentId },
         {
-          headers: { aToken, "Content-Type": "multipart/form-data" },
+          headers: { Authorization: `Bearer ${aToken}`, "Content-Type": "application/json" },
         }
       );
       if (data.success) {
@@ -112,7 +113,7 @@ const AdminContextProvider = (props) => {
         `${backendUrl}/api/admin/dashboard`,
         //{ appointmentId },
         {
-          headers: { aToken, "Content-Type": "multipart/form-data" },
+          headers: { Authorization: `Bearer ${aToken}`, "Content-Type": "application/json" },
         }
       );
       if (data.success) {

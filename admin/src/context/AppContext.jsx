@@ -6,10 +6,10 @@ const AppContextProvider = ( props ) => {
   const currency="Rs"
   const calculateAge=(dob)=>{
     const today=new Date()
-    const birthDate=newDate(dob)
+    const birthDate=new Date(dob)
 
     let age=today.getFullYear()-birthDate.getFullYear()
-    return age
+    return age<0?0:age
   }
   const months = [
     "",

@@ -30,6 +30,11 @@ const AppContextProvider = (props) => {
   };
   const loadUserProfileData = async () => {
     try {
+      console.log("Token being sent:", token); // Debugging step
+      if (!token) {
+        toast.error("No token found, please log in again.");
+        return;
+      }
       const { data } = await axios.get(`${backendUrl}/api/user/get-profile`, {
         headers: {
           Authorization: `Bearer ${token}`, // ✅ Correct way to send token

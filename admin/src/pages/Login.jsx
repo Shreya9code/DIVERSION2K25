@@ -12,6 +12,7 @@ const Login = () => {
 
   const { setAToken, backendUrl } = useContext(AdminContext);
   const {setDToken}=useContext(DoctorContext)
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     try {
@@ -22,8 +23,9 @@ const Login = () => {
         });
         if (response.data.success) {
             localStorage.setItem("aToken", response.data.token);
-          setDToken(response.data.token);
-          toast.success("Login successful!");
+          setAToken(response.data.token);
+          setDToken(""); // ✅ Ensure Doctor token is cleared
+          toast.success("Admin Login successful!");
           console.log("aToken:", response.data.token);
 
         } else {
@@ -34,9 +36,10 @@ const Login = () => {
         const response=await axios.post(backendUrl+'/api/doctor/login',{email,password})
         if (response.data.success) {
           localStorage.setItem("dToken", response.data.token);
-        setAToken(response.data.token);
-        toast.success("Login successful!");
-        console.log("Token:", response.data.token);
+        setDToken(response.data.token);
+        setAToken(""); // ✅ Ensure Admin token is cleared
+        toast.success("Doctor Login successful!");
+        console.log("dToken:", response.data.token);
 
       } else {
         setErrorMessage(response.data.error || "Login failed");

@@ -11,7 +11,10 @@ const AllAppointments = () => {
       console.log("Fetching appointments...");
       getAllAppointments().then(() =>
         console.log("Appointments fetched:", appointments)
+      
       );
+    }else {
+      console.log("No admin token found!");
     }
   }, [aToken]);
 
