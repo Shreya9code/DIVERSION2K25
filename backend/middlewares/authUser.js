@@ -23,10 +23,11 @@ const authUser = async (req, res, next) => {
     //verify token
     console.log("Token Before Verification:", token);
     console.log("JWT Secret at Verification:", process.env.JWT_SECRET);
-    const decodedBefore = jwt.decode(token, { complete: true });
-    console.log("Decoded Token Before Verification:", decodedBefore);
+    //const decodedBefore = jwt.decode(token, { complete: true });
+    //console.log("Decoded Token Before Verification:", decodedBefore);
     
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("decoed",decoded)
     req.userId = decoded.id;
     next();
     //add user from payload
