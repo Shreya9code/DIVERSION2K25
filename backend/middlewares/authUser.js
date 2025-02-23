@@ -6,7 +6,7 @@ const authUser = async (req, res, next) => {
     const authHeader = req.headers.authorization;
     console.log("Authorization Header:", authHeader); // Debugging log
 
-    if (!authHeader || !authHeader.startsWith("Bearer")) {
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res
         .status(401)
         .json({ success: false, message: "No token, authorization denied" });
@@ -22,13 +22,17 @@ const authUser = async (req, res, next) => {
     }
     //verify token
     console.log("Token Before Verification:", token);
-    console.log("JWT Secret at Verification:", process.env.JWT_SECRET);
+    console.log("JWT Secret in middleware:", process.env.JWT_SECRET);
     //const decodedBefore = jwt.decode(token, { complete: true });
     //console.log("Decoded Token Before Verification:", decodedBefore);
     
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.log("decoed",decoded)
+    console.log("decoded",decoded)
+    if (!decoded.id) {
+      return res.status(401).json({ success: false, message: "Invalid token structure" });
+    }
     req.userId = decoded.id;
+    console.log("User ID from Token:", req.userId);
     next();
     //add user from payload
     //req.admin = decoded;

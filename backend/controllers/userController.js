@@ -69,9 +69,14 @@ const loginUser = async (req, res) => {
     }
     console.log("JWT Secret:", process.env.JWT_SECRET);
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+    /*const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
-    });
+    });*/// Generate JWT Token (using user ID and email)
+    const token = jwt.sign(
+      { id: user._id, email: user.email }, // ✅ Correct payload
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
     console.log("Generated Token at login:", token);
     return res.status(200).json({
       success: true,
@@ -87,9 +92,14 @@ const loginUser = async (req, res) => {
 //api to get user profile data
 const getProfile = async (req, res) => {
   try {
+    console.log("getProfile called");
+    console.log("Request Headers:", req.headers);
+    console.log("User ID from token middleware:", req.userId);
+
+    console.log("User ID from token:", req.user);
     console.log("JWT Secret:", process.env.JWT_SECRET);
     const userId = req.userId;
-    if (!userId)
+    if (!req.userId)
       return res
         .status(400)
         .json({ success: false, message: "User ID not found" });
@@ -138,7 +148,6 @@ const updateProfile = async (req, res) => {
       const imageURL = imageUpload.secure_url;
       await userModel.findByIdAndUpdate(userId, { image: imageURL });
     }
-    
 
     res.json({ success: true, message: "Profile updated successfully" });
   } catch (error) {
@@ -198,7 +207,9 @@ const listAppointment = async (req, res) => {
     const userId = req.userId;
     console.log("User ID from token:", userId); // Debugging log
     if (!userId) {
-      return res.status(400).json({ success: false, message: "User ID missing" });
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID missing" });
     }
     const appointments = await appointmentModel.find({ userId });
     console.log("Fetched Appointments:", appointments); // Debugging log
@@ -209,37 +220,42 @@ const listAppointment = async (req, res) => {
   }
 };
 //api to cancel appointment
-const cancelAppointment=async (req,res) => {
+const cancelAppointment = async (req, res) => {
   try {
     const userId = req.userId;
     console.log("User ID from token:", userId); // Debugging log
     if (!userId) {
-      return res.status(400).json({ success: false, message: "User ID missing" });
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID missing" });
     }
-    const {appointmentId}=req.body
-    const appointmentData=await appointmentModel.findById(appointmentId)
+    const { appointmentId } = req.body;
+    const appointmentData = await appointmentModel.findById(appointmentId);
     //verify app user
-    if(appointmentData.userId!=userId){
-      return res.status(400).json({ success: false, message: "Unauthorized Action!" });
-
+    if (appointmentData.userId != userId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "Unauthorized Action!" });
     }
-    await appointmentModel.findByIdAndUpdate(appointmentId,{cancelled:true})
+    await appointmentModel.findByIdAndUpdate(appointmentId, {
+      cancelled: true,
+    });
     //release doc slot
-    const {docId,slotDate,slotTime}=appointmentData
-    const doctorData=await doctorModel.findById(docId)
+    const { docId, slotDate, slotTime } = appointmentData;
+    const doctorData = await doctorModel.findById(docId);
 
-    let slots_booked=doctorData.slots_booked
-    slots_booked[slotDate]=slots_booked[slotDate].filter(e=>e!==slotTime)
+    let slots_booked = doctorData.slots_booked;
+    slots_booked[slotDate] = slots_booked[slotDate].filter(
+      (e) => e !== slotTime
+    );
 
-    await doctorModel.findByIdAndUpdate(docId,{slots_booked})
-    res.json({ success: true, message:"app cancelled" });
-
+    await doctorModel.findByIdAndUpdate(docId, { slots_booked });
+    res.json({ success: true, message: "app cancelled" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: error.message });
-  
   }
-}
+};
 
 export {
   registerUser,
@@ -249,5 +265,4 @@ export {
   bookAppointment,
   listAppointment,
   cancelAppointment,
-  
 };
