@@ -8,7 +8,7 @@ Swasthya Sahayak is a healthcare platform for booking and scheduling doctor appo
 - **Admin DashBoard** for managing Appointments, patients
 - **Machine Learning** for disease prediction
 - **Prescription Upload & Analysis** (OCR + Gemini API)
-- **Blockchain-Based Health Insurance** (Upcoming)
+- **Blockchain-Based Health Insurance** (Ethereum)
 
 ---
 ## 🏗 Tech Stack
@@ -25,6 +25,7 @@ Swasthya Sahayak is a healthcare platform for booking and scheduling doctor appo
 - MongoDB
 - JWT Authentication
 - Multer (for file uploads)
+- Cloudinary
 
 ---
 ## 🚀 Installation & Setup
@@ -47,10 +48,10 @@ npm start
 cd admin-frontend
 
 # Install dependencies
-npm install
+npm i
 
 # Start the React app
-npm start
+npm run dev
 ```
 
 ---
@@ -68,11 +69,6 @@ npm start
 - `POST /api/appointments/book` - Book an appointment
 - `GET /api/appointments/user` - Get user’s appointments
 
----
-## 🛠 Features
-- **Blockchain-based Health Insurance** (Ethereum Integration)
-- **Streamlit and Gemini-based OCR Analysis** for Prescriptions
-- 
 
 ---
 ## 🤝 Contributing
