@@ -1,0 +1,3532 @@
+{
+  "contractName": "IHealthInsurance",
+  "abi": [
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "claimId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "policyholder",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ClaimPaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "claimId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum IHealthInsurance.ClaimStatus",
+          "name": "status",
+          "type": "uint8"
+        }
+      ],
+      "name": "ClaimStatusUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "claimId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "policyholder",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "ClaimSubmitted",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "policyholder",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "premium",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "coverageAmount",
+          "type": "uint256"
+        }
+      ],
+      "name": "PolicyCreated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        },
+        {
+          "indexed": false,
+          "internalType": "bool",
+          "name": "isActive",
+          "type": "bool"
+        }
+      ],
+      "name": "PolicyUpdated",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        },
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "policyholder",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "PremiumPaid",
+      "type": "event"
+    },
+    {
+      "anonymous": false,
+      "inputs": [
+        {
+          "indexed": true,
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "enum IHealthInsurance.UserRole",
+          "name": "role",
+          "type": "uint8"
+        }
+      ],
+      "name": "UserRegistered",
+      "type": "event"
+    },
+    {
+      "inputs": [],
+      "name": "registerPolicyholder",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "registerProvider",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "registerInsurer",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "user",
+          "type": "address"
+        }
+      ],
+      "name": "getUserRole",
+      "outputs": [
+        {
+          "internalType": "enum IHealthInsurance.UserRole",
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "premium",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "coverageAmount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "duration",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "coverageDetails",
+          "type": "string"
+        },
+        {
+          "internalType": "string[]",
+          "name": "conditions",
+          "type": "string[]"
+        }
+      ],
+      "name": "createPolicy",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPolicy",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "policyholder",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "premium",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "coverageAmount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "startDate",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "endDate",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "isActive",
+              "type": "bool"
+            },
+            {
+              "internalType": "string",
+              "name": "coverageDetails",
+              "type": "string"
+            },
+            {
+              "internalType": "string[]",
+              "name": "conditions",
+              "type": "string[]"
+            }
+          ],
+          "internalType": "struct IHealthInsurance.Policy",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "policyholder",
+          "type": "address"
+        }
+      ],
+      "name": "getPoliciesForPolicyholder",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "activatePolicy",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "deactivatePolicy",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "payPremium",
+      "outputs": [],
+      "stateMutability": "payable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "isPolicyActive",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        },
+        {
+          "internalType": "string",
+          "name": "description",
+          "type": "string"
+        },
+        {
+          "internalType": "string",
+          "name": "evidence",
+          "type": "string"
+        }
+      ],
+      "name": "submitClaim",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "claimId",
+          "type": "uint256"
+        },
+        {
+          "internalType": "enum IHealthInsurance.ClaimStatus",
+          "name": "newStatus",
+          "type": "uint8"
+        }
+      ],
+      "name": "reviewClaim",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "claimId",
+          "type": "uint256"
+        }
+      ],
+      "name": "processClaim",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "claimId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getClaim",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "policyId",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "policyholder",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "provider",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            },
+            {
+              "internalType": "string",
+              "name": "description",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "evidence",
+              "type": "string"
+            },
+            {
+              "internalType": "enum IHealthInsurance.ClaimStatus",
+              "name": "status",
+              "type": "uint8"
+            },
+            {
+              "internalType": "uint256",
+              "name": "submissionDate",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "processedDate",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct IHealthInsurance.Claim",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "policyId",
+          "type": "uint256"
+        }
+      ],
+      "name": "getClaimsForPolicy",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "policyholder",
+          "type": "address"
+        }
+      ],
+      "name": "getClaimsForPolicyholder",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "getContractBalance",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
+        }
+      ],
+      "name": "withdrawFunds",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.20+commit.a1b79de6\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"claimId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ClaimPaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"claimId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"enum IHealthInsurance.ClaimStatus\",\"name\":\"status\",\"type\":\"uint8\"}],\"name\":\"ClaimStatusUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"claimId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"ClaimSubmitted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"premium\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"coverageAmount\",\"type\":\"uint256\"}],\"name\":\"PolicyCreated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"isActive\",\"type\":\"bool\"}],\"name\":\"PolicyUpdated\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"PremiumPaid\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"enum IHealthInsurance.UserRole\",\"name\":\"role\",\"type\":\"uint8\"}],\"name\":\"UserRegistered\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"}],\"name\":\"activatePolicy\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"premium\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"coverageAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"duration\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"coverageDetails\",\"type\":\"string\"},{\"internalType\":\"string[]\",\"name\":\"conditions\",\"type\":\"string[]\"}],\"name\":\"createPolicy\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"}],\"name\":\"deactivatePolicy\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"claimId\",\"type\":\"uint256\"}],\"name\":\"getClaim\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"},{\"internalType\":\"address\",\"name\":\"provider\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"evidence\",\"type\":\"string\"},{\"internalType\":\"enum IHealthInsurance.ClaimStatus\",\"name\":\"status\",\"type\":\"uint8\"},{\"internalType\":\"uint256\",\"name\":\"submissionDate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"processedDate\",\"type\":\"uint256\"}],\"internalType\":\"struct IHealthInsurance.Claim\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"}],\"name\":\"getClaimsForPolicy\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"}],\"name\":\"getClaimsForPolicyholder\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"getContractBalance\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"}],\"name\":\"getPoliciesForPolicyholder\",\"outputs\":[{\"internalType\":\"uint256[]\",\"name\":\"\",\"type\":\"uint256[]\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"}],\"name\":\"getPolicy\",\"outputs\":[{\"components\":[{\"internalType\":\"uint256\",\"name\":\"id\",\"type\":\"uint256\"},{\"internalType\":\"address\",\"name\":\"policyholder\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"premium\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"coverageAmount\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"startDate\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"endDate\",\"type\":\"uint256\"},{\"internalType\":\"bool\",\"name\":\"isActive\",\"type\":\"bool\"},{\"internalType\":\"string\",\"name\":\"coverageDetails\",\"type\":\"string\"},{\"internalType\":\"string[]\",\"name\":\"conditions\",\"type\":\"string[]\"}],\"internalType\":\"struct IHealthInsurance.Policy\",\"name\":\"\",\"type\":\"tuple\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"user\",\"type\":\"address\"}],\"name\":\"getUserRole\",\"outputs\":[{\"internalType\":\"enum IHealthInsurance.UserRole\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"}],\"name\":\"isPolicyActive\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"}],\"name\":\"payPremium\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"claimId\",\"type\":\"uint256\"}],\"name\":\"processClaim\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"registerInsurer\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"registerPolicyholder\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"registerProvider\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"claimId\",\"type\":\"uint256\"},{\"internalType\":\"enum IHealthInsurance.ClaimStatus\",\"name\":\"newStatus\",\"type\":\"uint8\"}],\"name\":\"reviewClaim\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"policyId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"},{\"internalType\":\"string\",\"name\":\"description\",\"type\":\"string\"},{\"internalType\":\"string\",\"name\":\"evidence\",\"type\":\"string\"}],\"name\":\"submitClaim\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"amount\",\"type\":\"uint256\"}],\"name\":\"withdrawFunds\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Interface for the HealthInsurance contract\",\"kind\":\"dev\",\"methods\":{},\"title\":\"IHealthInsurance\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"project:/contracts/interfaces/IHealthInsurance.sol\":\"IHealthInsurance\"},\"evmVersion\":\"shanghai\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"project:/contracts/interfaces/IHealthInsurance.sol\":{\"keccak256\":\"0xb35733b524eb9c983e70a70c226514b703d1f6bdf233e3326184a93e29dd95f9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://602e962f50cb0208919eb30a73adee006b12cd28267ac0883245b92b2cad54d4\",\"dweb:/ipfs/QmSx3BKQCuxskH4dPpKdmKWSZXM1ER5vSGNJ7hvneaykyt\"]}},\"version\":1}",
+  "bytecode": "0x",
+  "deployedBytecode": "0x",
+  "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
+  "sourceMap": "",
+  "deployedSourceMap": "",
+  "source": "// SPDX-License-Identifier: MIT\r\npragma solidity ^0.8.0;\r\n\r\n/**\r\n * @title IHealthInsurance\r\n * @dev Interface for the HealthInsurance contract\r\n */\r\ninterface IHealthInsurance {\r\n    // Structs\r\n    struct Policy {\r\n        uint256 id;\r\n        address policyholder;\r\n        uint256 premium;\r\n        uint256 coverageAmount;\r\n        uint256 startDate;\r\n        uint256 endDate;\r\n        bool isActive;\r\n        string coverageDetails;\r\n        string[] conditions;\r\n    }\r\n    \r\n    struct Claim {\r\n        uint256 id;\r\n        uint256 policyId;\r\n        address policyholder;\r\n        address provider;\r\n        uint256 amount;\r\n        string description;\r\n        string evidence;\r\n        ClaimStatus status;\r\n        uint256 submissionDate;\r\n        uint256 processedDate;\r\n    }\r\n    \r\n    // Enums\r\n    enum ClaimStatus { Submitted, UnderReview, Approved, Rejected, Paid }\r\n    enum UserRole { Unregistered, Policyholder, Provider, Insurer }\r\n    \r\n    // Events\r\n    event UserRegistered(address indexed user, UserRole role);\r\n    event PolicyCreated(uint256 indexed policyId, address indexed policyholder, uint256 premium, uint256 coverageAmount);\r\n    event PolicyUpdated(uint256 indexed policyId, bool isActive);\r\n    event PremiumPaid(uint256 indexed policyId, address indexed policyholder, uint256 amount);\r\n    event ClaimSubmitted(uint256 indexed claimId, uint256 indexed policyId, address indexed policyholder, uint256 amount);\r\n    event ClaimStatusUpdated(uint256 indexed claimId, ClaimStatus status);\r\n    event ClaimPaid(uint256 indexed claimId, address indexed policyholder, uint256 amount);\r\n    \r\n    // User Management Functions\r\n    function registerPolicyholder() external;\r\n    function registerProvider() external;\r\n    function registerInsurer() external;\r\n    function getUserRole(address user) external view returns (UserRole);\r\n    \r\n    // Policy Management Functions\r\n    function createPolicy(\r\n        uint256 premium,\r\n        uint256 coverageAmount,\r\n        uint256 duration,\r\n        string calldata coverageDetails,\r\n        string[] calldata conditions\r\n    ) external returns (uint256);\r\n    \r\n    function getPolicy(uint256 policyId) external view returns (Policy memory);\r\n    function getPoliciesForPolicyholder(address policyholder) external view returns (uint256[] memory);\r\n    function activatePolicy(uint256 policyId) external;\r\n    function deactivatePolicy(uint256 policyId) external;\r\n    function payPremium(uint256 policyId) external payable;\r\n    function isPolicyActive(uint256 policyId) external view returns (bool);\r\n    \r\n    // Claim Management Functions\r\n    function submitClaim(\r\n        uint256 policyId,\r\n        uint256 amount,\r\n        string calldata description,\r\n        string calldata evidence\r\n    ) external returns (uint256);\r\n    \r\n    function reviewClaim(uint256 claimId, ClaimStatus newStatus) external;\r\n    function processClaim(uint256 claimId) external;\r\n    function getClaim(uint256 claimId) external view returns (Claim memory);\r\n    function getClaimsForPolicy(uint256 policyId) external view returns (uint256[] memory);\r\n    function getClaimsForPolicyholder(address policyholder) external view returns (uint256[] memory);\r\n    \r\n    // Fund Management Functions\r\n    function getContractBalance() external view returns (uint256);\r\n    function withdrawFunds(uint256 amount) external;\r\n}",
+  "sourcePath": "C:\\Users\\User\\Downloads\\healthcare\\health-insurance-blockchain\\contracts\\interfaces\\IHealthInsurance.sol",
+  "ast": {
+    "absolutePath": "project:/contracts/interfaces/IHealthInsurance.sol",
+    "exportedSymbols": {
+      "IHealthInsurance": [
+        691
+      ]
+    },
+    "id": 692,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 449,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:2"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "canonicalName": "IHealthInsurance",
+        "contractDependencies": [],
+        "contractKind": "interface",
+        "documentation": {
+          "id": 450,
+          "nodeType": "StructuredDocumentation",
+          "src": "60:88:2",
+          "text": " @title IHealthInsurance\n @dev Interface for the HealthInsurance contract"
+        },
+        "fullyImplemented": false,
+        "id": 691,
+        "linearizedBaseContracts": [
+          691
+        ],
+        "name": "IHealthInsurance",
+        "nameLocation": "160:16:2",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "IHealthInsurance.Policy",
+            "id": 470,
+            "members": [
+              {
+                "constant": false,
+                "id": 452,
+                "mutability": "mutable",
+                "name": "id",
+                "nameLocation": "233:2:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "225:10:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 451,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "225:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 454,
+                "mutability": "mutable",
+                "name": "policyholder",
+                "nameLocation": "254:12:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "246:20:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 453,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "246:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 456,
+                "mutability": "mutable",
+                "name": "premium",
+                "nameLocation": "285:7:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "277:15:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 455,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "277:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 458,
+                "mutability": "mutable",
+                "name": "coverageAmount",
+                "nameLocation": "311:14:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "303:22:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 457,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "303:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 460,
+                "mutability": "mutable",
+                "name": "startDate",
+                "nameLocation": "344:9:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "336:17:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 459,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "336:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 462,
+                "mutability": "mutable",
+                "name": "endDate",
+                "nameLocation": "372:7:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "364:15:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 461,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "364:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 464,
+                "mutability": "mutable",
+                "name": "isActive",
+                "nameLocation": "395:8:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "390:13:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 463,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "390:4:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 466,
+                "mutability": "mutable",
+                "name": "coverageDetails",
+                "nameLocation": "421:15:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "414:22:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 465,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "414:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 469,
+                "mutability": "mutable",
+                "name": "conditions",
+                "nameLocation": "456:10:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 470,
+                "src": "447:19:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
+                  "typeString": "string[]"
+                },
+                "typeName": {
+                  "baseType": {
+                    "id": 467,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "447:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "id": 468,
+                  "nodeType": "ArrayTypeName",
+                  "src": "447:8:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
+                    "typeString": "string[]"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Policy",
+            "nameLocation": "207:6:2",
+            "nodeType": "StructDefinition",
+            "scope": 691,
+            "src": "200:274:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "IHealthInsurance.Claim",
+            "id": 492,
+            "members": [
+              {
+                "constant": false,
+                "id": 472,
+                "mutability": "mutable",
+                "name": "id",
+                "nameLocation": "518:2:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "510:10:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 471,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "510:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 474,
+                "mutability": "mutable",
+                "name": "policyId",
+                "nameLocation": "539:8:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "531:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 473,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "531:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 476,
+                "mutability": "mutable",
+                "name": "policyholder",
+                "nameLocation": "566:12:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "558:20:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 475,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "558:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 478,
+                "mutability": "mutable",
+                "name": "provider",
+                "nameLocation": "597:8:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "589:16:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 477,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "589:7:2",
+                  "stateMutability": "nonpayable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 480,
+                "mutability": "mutable",
+                "name": "amount",
+                "nameLocation": "624:6:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "616:14:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 479,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "616:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 482,
+                "mutability": "mutable",
+                "name": "description",
+                "nameLocation": "648:11:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "641:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 481,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "641:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 484,
+                "mutability": "mutable",
+                "name": "evidence",
+                "nameLocation": "677:8:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "670:15:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 483,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "670:6:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 487,
+                "mutability": "mutable",
+                "name": "status",
+                "nameLocation": "708:6:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "696:18:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_ClaimStatus_$498",
+                  "typeString": "enum IHealthInsurance.ClaimStatus"
+                },
+                "typeName": {
+                  "id": 486,
+                  "nodeType": "UserDefinedTypeName",
+                  "pathNode": {
+                    "id": 485,
+                    "name": "ClaimStatus",
+                    "nameLocations": [
+                      "696:11:2"
+                    ],
+                    "nodeType": "IdentifierPath",
+                    "referencedDeclaration": 498,
+                    "src": "696:11:2"
+                  },
+                  "referencedDeclaration": 498,
+                  "src": "696:11:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ClaimStatus_$498",
+                    "typeString": "enum IHealthInsurance.ClaimStatus"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 489,
+                "mutability": "mutable",
+                "name": "submissionDate",
+                "nameLocation": "733:14:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "725:22:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 488,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "725:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 491,
+                "mutability": "mutable",
+                "name": "processedDate",
+                "nameLocation": "766:13:2",
+                "nodeType": "VariableDeclaration",
+                "scope": 492,
+                "src": "758:21:2",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 490,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "758:7:2",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "visibility": "internal"
+              }
+            ],
+            "name": "Claim",
+            "nameLocation": "493:5:2",
+            "nodeType": "StructDefinition",
+            "scope": 691,
+            "src": "486:301:2",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "IHealthInsurance.ClaimStatus",
+            "id": 498,
+            "members": [
+              {
+                "id": 493,
+                "name": "Submitted",
+                "nameLocation": "832:9:2",
+                "nodeType": "EnumValue",
+                "src": "832:9:2"
+              },
+              {
+                "id": 494,
+                "name": "UnderReview",
+                "nameLocation": "843:11:2",
+                "nodeType": "EnumValue",
+                "src": "843:11:2"
+              },
+              {
+                "id": 495,
+                "name": "Approved",
+                "nameLocation": "856:8:2",
+                "nodeType": "EnumValue",
+                "src": "856:8:2"
+              },
+              {
+                "id": 496,
+                "name": "Rejected",
+                "nameLocation": "866:8:2",
+                "nodeType": "EnumValue",
+                "src": "866:8:2"
+              },
+              {
+                "id": 497,
+                "name": "Paid",
+                "nameLocation": "876:4:2",
+                "nodeType": "EnumValue",
+                "src": "876:4:2"
+              }
+            ],
+            "name": "ClaimStatus",
+            "nameLocation": "818:11:2",
+            "nodeType": "EnumDefinition",
+            "src": "813:69:2"
+          },
+          {
+            "canonicalName": "IHealthInsurance.UserRole",
+            "id": 503,
+            "members": [
+              {
+                "id": 499,
+                "name": "Unregistered",
+                "nameLocation": "904:12:2",
+                "nodeType": "EnumValue",
+                "src": "904:12:2"
+              },
+              {
+                "id": 500,
+                "name": "Policyholder",
+                "nameLocation": "918:12:2",
+                "nodeType": "EnumValue",
+                "src": "918:12:2"
+              },
+              {
+                "id": 501,
+                "name": "Provider",
+                "nameLocation": "932:8:2",
+                "nodeType": "EnumValue",
+                "src": "932:8:2"
+              },
+              {
+                "id": 502,
+                "name": "Insurer",
+                "nameLocation": "942:7:2",
+                "nodeType": "EnumValue",
+                "src": "942:7:2"
+              }
+            ],
+            "name": "UserRole",
+            "nameLocation": "893:8:2",
+            "nodeType": "EnumDefinition",
+            "src": "888:63:2"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "8e18574f8a7333e6a87112742a55853a643e2f0550f4e1a3a2c3f1bb2994441d",
+            "id": 510,
+            "name": "UserRegistered",
+            "nameLocation": "984:14:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 509,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 505,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "user",
+                  "nameLocation": "1015:4:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 510,
+                  "src": "999:20:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 504,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "999:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 508,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "role",
+                  "nameLocation": "1030:4:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 510,
+                  "src": "1021:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_UserRole_$503",
+                    "typeString": "enum IHealthInsurance.UserRole"
+                  },
+                  "typeName": {
+                    "id": 507,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 506,
+                      "name": "UserRole",
+                      "nameLocations": [
+                        "1021:8:2"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 503,
+                      "src": "1021:8:2"
+                    },
+                    "referencedDeclaration": 503,
+                    "src": "1021:8:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_UserRole_$503",
+                      "typeString": "enum IHealthInsurance.UserRole"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "998:37:2"
+            },
+            "src": "978:58:2"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "f407f724dd5d2b7754fcbc405960f07c8da0a85e7f71948913fb2997e77bfc86",
+            "id": 520,
+            "name": "PolicyCreated",
+            "nameLocation": "1048:13:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 519,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 512,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "1078:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 520,
+                  "src": "1062:24:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 511,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1062:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 514,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyholder",
+                  "nameLocation": "1104:12:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 520,
+                  "src": "1088:28:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 513,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1088:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 516,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "premium",
+                  "nameLocation": "1126:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 520,
+                  "src": "1118:15:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 515,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1118:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 518,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "coverageAmount",
+                  "nameLocation": "1143:14:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 520,
+                  "src": "1135:22:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 517,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1135:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1061:97:2"
+            },
+            "src": "1042:117:2"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "e15cfe4faf2c48aff5ad86c6df00d460a0157ec33acae4ac4d921387028e55ac",
+            "id": 526,
+            "name": "PolicyUpdated",
+            "nameLocation": "1171:13:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 525,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 522,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "1201:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 526,
+                  "src": "1185:24:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 521,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1185:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 524,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "isActive",
+                  "nameLocation": "1216:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 526,
+                  "src": "1211:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 523,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1211:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1184:41:2"
+            },
+            "src": "1165:61:2"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "fbf1458fbbddabb878de144276216e8ccda619cbac2d598e6ee37ff72173afb1",
+            "id": 534,
+            "name": "PremiumPaid",
+            "nameLocation": "1238:11:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 533,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 528,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "1266:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 534,
+                  "src": "1250:24:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 527,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1250:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 530,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyholder",
+                  "nameLocation": "1292:12:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 534,
+                  "src": "1276:28:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 529,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1276:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 532,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1314:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 534,
+                  "src": "1306:14:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 531,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1306:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1249:72:2"
+            },
+            "src": "1232:90:2"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "3a30d1c4069e097873e77443df9683e8de5c7ba3674315b8670a0211e3130195",
+            "id": 544,
+            "name": "ClaimSubmitted",
+            "nameLocation": "1334:14:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 543,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 536,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "claimId",
+                  "nameLocation": "1365:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 544,
+                  "src": "1349:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 535,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1349:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 538,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "1390:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 544,
+                  "src": "1374:24:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 537,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1374:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 540,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyholder",
+                  "nameLocation": "1416:12:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 544,
+                  "src": "1400:28:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 539,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1400:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 542,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1438:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 544,
+                  "src": "1430:14:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 541,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1430:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1348:97:2"
+            },
+            "src": "1328:118:2"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "2e7de2377c1e6f85a268dbe00519c60d65c9e38570a118be0eb07feb07fc89be",
+            "id": 551,
+            "name": "ClaimStatusUpdated",
+            "nameLocation": "1458:18:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 550,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 546,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "claimId",
+                  "nameLocation": "1493:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 551,
+                  "src": "1477:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 545,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1477:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 549,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "status",
+                  "nameLocation": "1514:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 551,
+                  "src": "1502:18:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ClaimStatus_$498",
+                    "typeString": "enum IHealthInsurance.ClaimStatus"
+                  },
+                  "typeName": {
+                    "id": 548,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 547,
+                      "name": "ClaimStatus",
+                      "nameLocations": [
+                        "1502:11:2"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 498,
+                      "src": "1502:11:2"
+                    },
+                    "referencedDeclaration": 498,
+                    "src": "1502:11:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ClaimStatus_$498",
+                      "typeString": "enum IHealthInsurance.ClaimStatus"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1476:45:2"
+            },
+            "src": "1452:70:2"
+          },
+          {
+            "anonymous": false,
+            "eventSelector": "af3c8fdd75d667f71d36d7840b8ef9086c516c9b047ad6a83a5a66151342123a",
+            "id": 559,
+            "name": "ClaimPaid",
+            "nameLocation": "1534:9:2",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 558,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 553,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "claimId",
+                  "nameLocation": "1560:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 559,
+                  "src": "1544:23:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 552,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1544:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 555,
+                  "indexed": true,
+                  "mutability": "mutable",
+                  "name": "policyholder",
+                  "nameLocation": "1585:12:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 559,
+                  "src": "1569:28:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 554,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1569:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 557,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "1607:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 559,
+                  "src": "1599:14:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 556,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1599:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1543:71:2"
+            },
+            "src": "1528:87:2"
+          },
+          {
+            "functionSelector": "0fbea2e0",
+            "id": 562,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerPolicyholder",
+            "nameLocation": "1670:20:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 560,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1690:2:2"
+            },
+            "returnParameters": {
+              "id": 561,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1701:0:2"
+            },
+            "scope": 691,
+            "src": "1661:41:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "f769c6d0",
+            "id": 565,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerProvider",
+            "nameLocation": "1717:16:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 563,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1733:2:2"
+            },
+            "returnParameters": {
+              "id": 564,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1744:0:2"
+            },
+            "scope": 691,
+            "src": "1708:37:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "ebc14ea7",
+            "id": 568,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "registerInsurer",
+            "nameLocation": "1760:15:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 566,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1775:2:2"
+            },
+            "returnParameters": {
+              "id": 567,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1786:0:2"
+            },
+            "scope": 691,
+            "src": "1751:36:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "27820851",
+            "id": 576,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getUserRole",
+            "nameLocation": "1802:11:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 571,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 570,
+                  "mutability": "mutable",
+                  "name": "user",
+                  "nameLocation": "1822:4:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 576,
+                  "src": "1814:12:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 569,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1814:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1813:14:2"
+            },
+            "returnParameters": {
+              "id": 575,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 574,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 576,
+                  "src": "1851:8:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_UserRole_$503",
+                    "typeString": "enum IHealthInsurance.UserRole"
+                  },
+                  "typeName": {
+                    "id": 573,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 572,
+                      "name": "UserRole",
+                      "nameLocations": [
+                        "1851:8:2"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 503,
+                      "src": "1851:8:2"
+                    },
+                    "referencedDeclaration": 503,
+                    "src": "1851:8:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_UserRole_$503",
+                      "typeString": "enum IHealthInsurance.UserRole"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1850:10:2"
+            },
+            "scope": 691,
+            "src": "1793:68:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "d31a6799",
+            "id": 592,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "createPolicy",
+            "nameLocation": "1918:12:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 588,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 578,
+                  "mutability": "mutable",
+                  "name": "premium",
+                  "nameLocation": "1949:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 592,
+                  "src": "1941:15:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 577,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1941:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 580,
+                  "mutability": "mutable",
+                  "name": "coverageAmount",
+                  "nameLocation": "1975:14:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 592,
+                  "src": "1967:22:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 579,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1967:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 582,
+                  "mutability": "mutable",
+                  "name": "duration",
+                  "nameLocation": "2008:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 592,
+                  "src": "2000:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 581,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2000:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 584,
+                  "mutability": "mutable",
+                  "name": "coverageDetails",
+                  "nameLocation": "2043:15:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 592,
+                  "src": "2027:31:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 583,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2027:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 587,
+                  "mutability": "mutable",
+                  "name": "conditions",
+                  "nameLocation": "2087:10:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 592,
+                  "src": "2069:28:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_string_calldata_ptr_$dyn_calldata_ptr",
+                    "typeString": "string[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 585,
+                      "name": "string",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "2069:6:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage_ptr",
+                        "typeString": "string"
+                      }
+                    },
+                    "id": 586,
+                    "nodeType": "ArrayTypeName",
+                    "src": "2069:8:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_string_storage_$dyn_storage_ptr",
+                      "typeString": "string[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1930:174:2"
+            },
+            "returnParameters": {
+              "id": 591,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 590,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 592,
+                  "src": "2123:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 589,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2123:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2122:9:2"
+            },
+            "scope": 691,
+            "src": "1909:223:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "2b07fce3",
+            "id": 600,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPolicy",
+            "nameLocation": "2153:9:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 595,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 594,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "2171:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 600,
+                  "src": "2163:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 593,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2163:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2162:18:2"
+            },
+            "returnParameters": {
+              "id": 599,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 598,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 600,
+                  "src": "2204:13:2",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Policy_$470_memory_ptr",
+                    "typeString": "struct IHealthInsurance.Policy"
+                  },
+                  "typeName": {
+                    "id": 597,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 596,
+                      "name": "Policy",
+                      "nameLocations": [
+                        "2204:6:2"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 470,
+                      "src": "2204:6:2"
+                    },
+                    "referencedDeclaration": 470,
+                    "src": "2204:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Policy_$470_storage_ptr",
+                      "typeString": "struct IHealthInsurance.Policy"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2203:15:2"
+            },
+            "scope": 691,
+            "src": "2144:75:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "9420d984",
+            "id": 608,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getPoliciesForPolicyholder",
+            "nameLocation": "2234:26:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 603,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 602,
+                  "mutability": "mutable",
+                  "name": "policyholder",
+                  "nameLocation": "2269:12:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 608,
+                  "src": "2261:20:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 601,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2261:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2260:22:2"
+            },
+            "returnParameters": {
+              "id": 607,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 606,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 608,
+                  "src": "2306:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 604,
+                      "name": "uint256",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "2306:7:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 605,
+                    "nodeType": "ArrayTypeName",
+                    "src": "2306:9:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2305:18:2"
+            },
+            "scope": 691,
+            "src": "2225:99:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "871ae93a",
+            "id": 613,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "activatePolicy",
+            "nameLocation": "2339:14:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 611,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 610,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "2362:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 613,
+                  "src": "2354:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 609,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2354:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2353:18:2"
+            },
+            "returnParameters": {
+              "id": 612,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2380:0:2"
+            },
+            "scope": 691,
+            "src": "2330:51:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "eb4a4645",
+            "id": 618,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "deactivatePolicy",
+            "nameLocation": "2396:16:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 616,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 615,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "2421:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 618,
+                  "src": "2413:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 614,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2413:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2412:18:2"
+            },
+            "returnParameters": {
+              "id": 617,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2439:0:2"
+            },
+            "scope": 691,
+            "src": "2387:53:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "4364b26e",
+            "id": 623,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "payPremium",
+            "nameLocation": "2455:10:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 621,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 620,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "2474:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 623,
+                  "src": "2466:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 619,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2466:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2465:18:2"
+            },
+            "returnParameters": {
+              "id": 622,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2500:0:2"
+            },
+            "scope": 691,
+            "src": "2446:55:2",
+            "stateMutability": "payable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "bd8afa46",
+            "id": 630,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "isPolicyActive",
+            "nameLocation": "2516:14:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 626,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 625,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "2539:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 630,
+                  "src": "2531:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 624,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2531:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2530:18:2"
+            },
+            "returnParameters": {
+              "id": 629,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 628,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 630,
+                  "src": "2572:4:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  },
+                  "typeName": {
+                    "id": 627,
+                    "name": "bool",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2572:4:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2571:6:2"
+            },
+            "scope": 691,
+            "src": "2507:71:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "d291babd",
+            "id": 643,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "submitClaim",
+            "nameLocation": "2634:11:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 639,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 632,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "2664:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 643,
+                  "src": "2656:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 631,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2656:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 634,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "2691:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 643,
+                  "src": "2683:14:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 633,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2683:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 636,
+                  "mutability": "mutable",
+                  "name": "description",
+                  "nameLocation": "2724:11:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 643,
+                  "src": "2708:27:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 635,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2708:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 638,
+                  "mutability": "mutable",
+                  "name": "evidence",
+                  "nameLocation": "2762:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 643,
+                  "src": "2746:24:2",
+                  "stateVariable": false,
+                  "storageLocation": "calldata",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_calldata_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 637,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2746:6:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2645:132:2"
+            },
+            "returnParameters": {
+              "id": 642,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 641,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 643,
+                  "src": "2796:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 640,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2796:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2795:9:2"
+            },
+            "scope": 691,
+            "src": "2625:180:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "3a59f4f3",
+            "id": 651,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "reviewClaim",
+            "nameLocation": "2826:11:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 649,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 645,
+                  "mutability": "mutable",
+                  "name": "claimId",
+                  "nameLocation": "2846:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 651,
+                  "src": "2838:15:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 644,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2838:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 648,
+                  "mutability": "mutable",
+                  "name": "newStatus",
+                  "nameLocation": "2867:9:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 651,
+                  "src": "2855:21:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_ClaimStatus_$498",
+                    "typeString": "enum IHealthInsurance.ClaimStatus"
+                  },
+                  "typeName": {
+                    "id": 647,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 646,
+                      "name": "ClaimStatus",
+                      "nameLocations": [
+                        "2855:11:2"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 498,
+                      "src": "2855:11:2"
+                    },
+                    "referencedDeclaration": 498,
+                    "src": "2855:11:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_enum$_ClaimStatus_$498",
+                      "typeString": "enum IHealthInsurance.ClaimStatus"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2837:40:2"
+            },
+            "returnParameters": {
+              "id": 650,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2886:0:2"
+            },
+            "scope": 691,
+            "src": "2817:70:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "7257dfc9",
+            "id": 656,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "processClaim",
+            "nameLocation": "2902:12:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 654,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 653,
+                  "mutability": "mutable",
+                  "name": "claimId",
+                  "nameLocation": "2923:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 656,
+                  "src": "2915:15:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 652,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2915:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2914:17:2"
+            },
+            "returnParameters": {
+              "id": 655,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "2940:0:2"
+            },
+            "scope": 691,
+            "src": "2893:48:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "5aef2447",
+            "id": 664,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getClaim",
+            "nameLocation": "2956:8:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 659,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 658,
+                  "mutability": "mutable",
+                  "name": "claimId",
+                  "nameLocation": "2973:7:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 664,
+                  "src": "2965:15:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 657,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "2965:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "2964:17:2"
+            },
+            "returnParameters": {
+              "id": 663,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 662,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 664,
+                  "src": "3005:12:2",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_struct$_Claim_$492_memory_ptr",
+                    "typeString": "struct IHealthInsurance.Claim"
+                  },
+                  "typeName": {
+                    "id": 661,
+                    "nodeType": "UserDefinedTypeName",
+                    "pathNode": {
+                      "id": 660,
+                      "name": "Claim",
+                      "nameLocations": [
+                        "3005:5:2"
+                      ],
+                      "nodeType": "IdentifierPath",
+                      "referencedDeclaration": 492,
+                      "src": "3005:5:2"
+                    },
+                    "referencedDeclaration": 492,
+                    "src": "3005:5:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_struct$_Claim_$492_storage_ptr",
+                      "typeString": "struct IHealthInsurance.Claim"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3004:14:2"
+            },
+            "scope": 691,
+            "src": "2947:72:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "824ba25f",
+            "id": 672,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getClaimsForPolicy",
+            "nameLocation": "3034:18:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 667,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 666,
+                  "mutability": "mutable",
+                  "name": "policyId",
+                  "nameLocation": "3061:8:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 672,
+                  "src": "3053:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 665,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3053:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3052:18:2"
+            },
+            "returnParameters": {
+              "id": 671,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 670,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 672,
+                  "src": "3094:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 668,
+                      "name": "uint256",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "3094:7:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 669,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3094:9:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3093:18:2"
+            },
+            "scope": 691,
+            "src": "3025:87:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "ad12289f",
+            "id": 680,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getClaimsForPolicyholder",
+            "nameLocation": "3127:24:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 675,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 674,
+                  "mutability": "mutable",
+                  "name": "policyholder",
+                  "nameLocation": "3160:12:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 680,
+                  "src": "3152:20:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 673,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3152:7:2",
+                    "stateMutability": "nonpayable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3151:22:2"
+            },
+            "returnParameters": {
+              "id": 679,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 678,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 680,
+                  "src": "3197:16:2",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
+                    "typeString": "uint256[]"
+                  },
+                  "typeName": {
+                    "baseType": {
+                      "id": 676,
+                      "name": "uint256",
+                      "nodeType": "ElementaryTypeName",
+                      "src": "3197:7:2",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "id": 677,
+                    "nodeType": "ArrayTypeName",
+                    "src": "3197:9:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_array$_t_uint256_$dyn_storage_ptr",
+                      "typeString": "uint256[]"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3196:18:2"
+            },
+            "scope": 691,
+            "src": "3118:97:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "6f9fb98a",
+            "id": 685,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "getContractBalance",
+            "nameLocation": "3270:18:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 681,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3288:2:2"
+            },
+            "returnParameters": {
+              "id": 684,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 683,
+                  "mutability": "mutable",
+                  "name": "",
+                  "nameLocation": "-1:-1:-1",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 685,
+                  "src": "3314:7:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 682,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3314:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3313:9:2"
+            },
+            "scope": 691,
+            "src": "3261:62:2",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "external"
+          },
+          {
+            "functionSelector": "155dd5ee",
+            "id": 690,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "withdrawFunds",
+            "nameLocation": "3338:13:2",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 688,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 687,
+                  "mutability": "mutable",
+                  "name": "amount",
+                  "nameLocation": "3360:6:2",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 690,
+                  "src": "3352:14:2",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 686,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "3352:7:2",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "3351:16:2"
+            },
+            "returnParameters": {
+              "id": 689,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "3376:0:2"
+            },
+            "scope": 691,
+            "src": "3329:48:2",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "external"
+          }
+        ],
+        "scope": 692,
+        "src": "150:3230:2",
+        "usedErrors": [],
+        "usedEvents": [
+          510,
+          520,
+          526,
+          534,
+          544,
+          551,
+          559
+        ]
+      }
+    ],
+    "src": "33:3347:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.20+commit.a1b79de6.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.4.16",
+  "updatedAt": "2025-02-22T12:40:40.183Z",
+  "devdoc": {
+    "details": "Interface for the HealthInsurance contract",
+    "kind": "dev",
+    "methods": {},
+    "title": "IHealthInsurance",
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}
